@@ -3,6 +3,7 @@ import StoreFront from "./Components/StoreFront/StoreFront";
 import ShoppingCart from "./Components/ShoppingCart/ShoppingCart";
 import NavBar from "./Components/NavBar/NavBar";
 
+import axios from 'axios'
 class App extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +17,7 @@ class App extends Component {
     this.navigate = this.navigate.bind(this);
   }
   componentDidMount() {
-    axios
-      .get("https://practiceapi.devmountain.com/products/")
+      axios.get("https://practiceapi.devmountain.com/products/")
       .then(response => {
         this.setState({
           products: response.data
@@ -54,9 +54,9 @@ class App extends Component {
         <NavBar navigate={this.navigate} />
         <div className="main-container">
           {showCart ? (
-            <ShoppingCart cart={cart} />
+            <ShoppingCart cart={this.state.cart} />
           ) : (
-            <StoreFront products={products} />
+            <StoreFront products={products} addToCart={this.addToCart} />
           )}
         </div>
       </div>
